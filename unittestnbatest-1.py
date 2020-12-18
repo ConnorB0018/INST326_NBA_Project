@@ -1,7 +1,6 @@
-"""A module for the NBA project's unit-test."""
-
 import unittest
 import pandas
+import nba_project
 import matplotlib.pyplot as plt 
 from nba_api.stats.static import teams
 from nba_api.stats.endpoints import teamgamelog
@@ -10,35 +9,86 @@ from nba_project import nba_gamestats
 from nba_api.stats.endpoints import boxscoresummaryv2 
 
 class nba_teamgameTestCase(unittest.TestCase):
+    """A class  being a test case for the team game
+        Attributes:
+              nba_teamgame: the class being tested
+    """
     def setUp(self):
+        """  sets up everything for the test.
+        Args:
+          none
+        SideEffects:
+          Sets up the team game and team id. 
+        """
         self.nba_teamgame = nba_teamgame("Chicago Bulls","2010")
         self.nba_teamgame.team_id()
 
     def test_team_id(self):
+        """  sets up the team id and test for correct team number
+        Args:
+          none 
+        """
         self.nba_teamgame.team_id()
         self.assertEqual((self.nba_teamgame.num),1610612741,'incorrect team number')
     
     def test_team_gamelist(self):
+        """  sets up the team game list and test for a game id and matchup being correct
+        Args:
+          none 
+        """
         gamedata=self.nba_teamgame.team_gamelist() 
-    
+        #print(gamedata.info())
+        #g=gamedata("Game_ID")
+        ##print(gamedata[["Game_ID"]],index=["0"])
+        ##print(gamedata.loc[0,"Game_ID"],gamedata.loc[0,"MATCHUP"])
         self.assertEqual(gamedata.loc[0,"Game_ID"],"0021001222",'incorrect game id')
         self.assertEqual(gamedata.loc[0,"MATCHUP"],"CHI vs. NJN",'incorrect matchup teams')
 
 
 class nba_gamestatsTestCase(unittest.TestCase):
+    """A class  being a test case for the game stats
+        Attributes:
+              nba_gamestats: the class being tested
+    """
     def setUp(self):
+        """  sets up the team game stats so it can be tested
+        Args:
+          none
+        SideEffects: creates the nba_gamesstats object to test
+        """
         self.nba_gamestats = nba_gamestats("0021001222")
         self.nba_gamestats 
 
     def test_nbagame_info(self):
+        """   tests the game date and attendence for a game
+        Args:
+          none 
+        """
         gamedata2=self.nba_gamestats.nbagame_info()
-        
+        ##print(gamedata2.info())
+        #g=gamedata("Game_ID")
+        ##print(gamedata[["Game_ID"]],index=["0"])
+        ##print(gamedata2.loc[0,'GAME_DATE'],gamedata2.loc[0,'ATTENDANCE'])
         self.assertEqual(gamedata2.loc[0,'GAME_DATE'],"WEDNESDAY, APRIL 13, 2011",'incorrect game date info')
         self.assertEqual(gamedata2.loc[0,'ATTENDANCE'],22420,'incorrect attendance')
     
     def test_nbagame_summary(self):
+        """   test the game summary and asserts the data if wrong
+        Args:
+          none 
+        """
         gamedata3=self.nba_gamestats.nbagame_summary()
-        
+        #print("================================================================================")
+        #print(gamedata3.info())
+        ##print("================================================================================")
+        ##print(gamedata3)
+        ##print("================================================================================")
+
+        #g=gamedata("Game_ID")
+        ##print(gamedata[["Game_ID"]],index=["0"])
+        ##print("Selected Team", gamedata3.loc[0,'PTS_QTR1'],gamedata3.loc[0,'PTS_QTR2'],gamedata3.loc[0,'PTS_QTR3'],gamedata3.loc[0,'PTS_QTR4'])
+        ##print("Other Team", gamedata3.loc[1,'PTS_QTR1'],gamedata3.loc[1,'PTS_QTR2'],gamedata3.loc[1,'PTS_QTR3'],gamedata3.loc[1,'PTS_QTR4'])
+
         self.assertEqual(gamedata3.loc[0,'PTS_QTR1'], 26,'Selected team incorrect quarter1 points')
         self.assertEqual(gamedata3.loc[0,'PTS_QTR2'], 24,'Selected team incorrect quarter2 points')
         self.assertEqual(gamedata3.loc[0,'PTS_QTR3'], 18,'Selected team incorrect quarter3 points')
@@ -50,8 +100,14 @@ class nba_gamestatsTestCase(unittest.TestCase):
         self.assertEqual(gamedata3.loc[1,'PTS_QTR4'], 24,'Other team incorrect quarter4 points')
 
     def test_nbagame_summaryscore(self):
+        """   test the summary of the scores for players and asserts them if they are wrong
+        Args:
+          none 
+        """
         gamedata4=self.nba_gamestats.nbagame_summaryscore()
-        
+        ##print("test_nbagame_summaryscore vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
+        ##print(gamedata4)
+        ##self.assertEqual(gamedata4.loc[0,'PTS_QTR1'], 26,'incorrect quarter1 points')
         self.assertEqual(gamedata4.loc[11, 'Players'], 'Jordan Farmar (NJN)','incorrect player')
         self.assertEqual(gamedata4.loc[11, 'PTS'], 21,'incorrect points for Jordan Farmar (NJN)')
 
@@ -66,11 +122,15 @@ class nba_gamestatsTestCase(unittest.TestCase):
 
         self.assertEqual(gamedata4.loc[12, 'Players'], 'Johan Petro (NJN)','incorrect player')
         self.assertEqual(gamedata4.loc[12, 'PTS'], 13,'incorrect points for Johan Petro (NJN)')
-        
+        ##print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
 
     def test_nbagame_summaryreb(self):
+        """   test the summary of the rebounds for players and asserts them if they are wrong
+        Args:
+          none 
+        """
         gamedata5=self.nba_gamestats.nbagame_summaryreb()
-        
+        ##print("test_nbagame_summaryreb vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
         self.assertEqual(gamedata5.loc[0,'Players'], 'Joakim Noah (CHI)','incorrect player')
         self.assertEqual(gamedata5.loc[0, 'REB'],10,'incorrect rebound for Joakim Noah (CHI)')
 
@@ -86,11 +146,16 @@ class nba_gamestatsTestCase(unittest.TestCase):
         self.assertEqual(gamedata5.loc[3,'Players'], 'Luol Deng (CHI)','incorrect player')
         self.assertEqual(gamedata5.loc[3, 'REB'],6,'incorrect  rebound for Luol Deng (CHI)')
         
-        
+        ##print(gamedata5.head())  
+        ##print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
 
     def test_nbagame_summaryassist(self):
+        """   test the summary of the assist for players and asserts them if they are wrong
+        Args:
+          none 
+        """
         gamedata7=self.nba_gamestats.nbagame_summaryassists()
-        
+        ##print("test_nbagame_summaryassist vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
         self.assertEqual(gamedata7.loc[11,'Players'], 'Jordan Farmar (NJN)','incorrect player')
         self.assertEqual(gamedata7.loc[11, 'AST'],12,'incorrect assists for Jordan Farmar (NJN)')
 
@@ -106,7 +171,8 @@ class nba_gamestatsTestCase(unittest.TestCase):
         self.assertEqual(gamedata7.loc[9,'Players'], 'Keith Bogans (CHI)','incorrect player')
         self.assertEqual(gamedata7.loc[9, 'AST'],3,'incorrect assists for Keith Bogans (CHI)')
 
-        
+        ##print(gamedata7)     
+        ##print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
     
 if __name__ == '__main__':
     unittest.main()
