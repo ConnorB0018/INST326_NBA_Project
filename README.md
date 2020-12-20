@@ -1,4 +1,5 @@
 # NBA Score Visualizer Program (INST 326 - Group 7)
+### _Group Members : Matthew Makonnen, Connor Beaudoin, Moses Nyirinkindi, Eric Evan Topmiller_
 
 ### Introduction
 - The NBA Score Visualizer Program is a visualization application (python program) that allows users to access and generate data visualizations of various components of the Box Score for different NBA matchups. 
