@@ -21,8 +21,8 @@ Steps of running the program (_nba_project.py_):
 6. Paste the Game_ID to where it states "Enter NBA Game_ID: ".
 
 Steps of running the program (_nbaproject_gui_v2.py_):
-1. Download both the _nba_project.py_ and _nbaproject_gui_v2.py_ python files.
-2. Open and run the downloaded files through the Command Prompt (CMD).
+1. Download both the _nba_project.py_ and _nbaproject_gui_v2.py_ python files in the same folder.
+2. Open and run the downloaded file _nbaproject_gui_v2.py_ from the folder through the Command Prompt (CMD).
 3. Enter the NBA Team Full-Name (Ex: Chicago Bulls).
 4. Enter the NBA Season/Year (Ex: 2012).
 5. Find the specific NBA matchup you want to see and copy the Game_ID (Ex: 0029700076) that is next to the matchup.
